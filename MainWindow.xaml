@@ -7,16 +7,45 @@
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResize"
-        Title="MainWindow"  Height="768" Width="1024" >
+        ResizeMode="NoResize"
+        Title="ClicKing" Height="600" Width="1000
+        " >
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="PlayButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="100" Background="Green" Width="30" Margin="0">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <StackPanel Orientation="Horizontal">
-        <Grid  x:Name="grid" Width="670">
+        <Grid Name="table" Width="400" Height="580" >
+            <Grid.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.OpacityMask>
         </Grid>
-        <Grid Width="330" Name="grid2">
+        <Grid Name="info" Width="600" Height="580" >
+            <Grid.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.OpacityMask>
             <Grid.ColumnDefinitions >
+                <ColumnDefinition/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -26,15 +55,15 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="15*"/>
             </Grid.RowDefinitions>
-            <TextBlock   Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"  >Time(sec):</TextBlock>
-            <TextBlock   x:Name="timeLabel" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"  >0</TextBlock>
-            <TextBlock  Margin="10" Grid.Row="1" VerticalAlignment="Center"  Grid.ColumnSpan="1">Adja meg a nevét:</TextBlock>
-            <TextBox x:Name="name" Grid.Row="1" Grid.ColumnSpan="2" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"  Grid.Column="1" />
-            <TextBlock  Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Center"  Grid.ColumnSpan="23">Adja meg a méret számot(min:3 max:10):</TextBlock>
-            <TextBox x:Name="number" Grid.Row="2" Height="20" Width="50" HorizontalAlignment="center"  VerticalAlignment="Center" PreviewTextInput="NumberValidationTextBox" Grid.Column="2" TextChanged="number_TextChanged" />
-            <Button  Content="Play" Grid.Column="1" Grid.Row="3"  Click="Button_Click" Margin="0,10,0,9" />
-            <TextBlock   Grid.Row="3" Grid.Column="0" VerticalAlignment="Bottom"  >Leaderboard:</TextBlock>
-            <DataGrid x:Name="scoreGrid" Grid.Row="4" Grid.ColumnSpan="3" IsReadOnly="True"  Height="580" VerticalAlignment="Top" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False">
+            <TextBlock   Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Right"  >Time(sec):</TextBlock>
+            <TextBlock   x:Name="timeLabel" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" FontWeight="Bold" Margin="3" Text="ms" >0</TextBlock>
+            <TextBlock  Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Center" Height="20">Adja meg a nevét:</TextBlock>
+            <TextBox x:Name="name" Grid.Row="1" Grid.ColumnSpan="1" Height="20" Width="90" HorizontalAlignment="Left" VerticalAlignment="Center"  Grid.Column="1" />
+            <TextBlock  Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Center"  Grid.ColumnSpan="1" Height="20">Tábla mérete(1-10):</TextBlock>
+            <TextBox x:Name="number" Grid.Row="2" Height="20" Width="50" HorizontalAlignment="center"  VerticalAlignment="Center" PreviewTextInput="NumberValidationTextBox" Grid.Column="1" TextChanged="number_TextChanged" />
+            <Button  Content="Play" Grid.Column="1" Grid.Row="3"  Click="Button_Click" Style="{StaticResource PlayButton}"/>
+            <TextBlock   Grid.Row="3" Grid.Column="0" VerticalAlignment="Bottom" Margin="3,0,0,0" Height="20" FontWeight="Bold">Leaderboard</TextBlock>
+            <DataGrid x:Name="scoreGrid" Grid.Row="4" Grid.ColumnSpan="4" IsReadOnly="True"  Height="438" VerticalAlignment="Center" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Player name" Width="1*" Binding="{Binding Path=PlayerName}">
                         <DataGridTextColumn.HeaderStyle>
@@ -44,6 +73,20 @@
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Time(sec)" Width="1*" Binding="{Binding Path=PlayerTime}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Mode" Width="1*" Binding="{Binding Path=PlayerTime}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Date" Width="1*" Binding="{Binding Path=PlayerTime}">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />

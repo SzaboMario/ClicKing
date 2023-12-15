@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jQm8DPbLn/nvlNvUhjEE3mPcAyDu1R/K3/SwZEBkjpB5UrsQ4YlPoIPUmt63JuGbo0SIbsz5cujtqfCekTDU+A==",
+  "dgSpecHash": "d71ZWz7KcKEXhp9TZXKxlvwY/lvvkxrBlJ3OhlYIGzJi9tImnepJj4oX44S3d/94BHFFRwturxzkoF1ylFQA/w==",
   "success": true,
-  "projectFilePath": "D:\\VisualStudioProjects\\C#\\TestWpf\\WPF.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\SDIHU\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\Rió\\Documents\\VS22_Projects\\ReadyToUseProjects\\numbersorterWPF\\ClicKing.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

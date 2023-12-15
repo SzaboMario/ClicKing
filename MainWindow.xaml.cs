@@ -110,20 +110,20 @@ namespace WPF
             rowColumnNumber = Convert.ToInt32(number.Text);
             if (rowColumnNumber <= 10 && rowColumnNumber >= 3)
             {
-                grid.Children.Clear();
-                grid.ColumnDefinitions.Clear();
-                grid.RowDefinitions.Clear();
+                table.Children.Clear();
+                table.ColumnDefinitions.Clear();
+                table.RowDefinitions.Clear();
                 for (int i = 1; i <= rowColumnNumber; i++)
                 {
                     ColumnDefinition colDef1 = new ColumnDefinition();
                     RowDefinition rowDef1 = new RowDefinition();
-                    grid.ColumnDefinitions.Add(colDef1);
-                    grid.RowDefinitions.Add(rowDef1);
+                    table.ColumnDefinitions.Add(colDef1);
+                    table.RowDefinitions.Add(rowDef1);
                 }
                 int coun = 1;
-                for (int i = 0; i < grid.ColumnDefinitions.Count; i++)
+                for (int i = 0; i < table.ColumnDefinitions.Count; i++)
                 {
-                    for (int j = 0; j < grid.RowDefinitions.Count; j++)
+                    for (int j = 0; j < table.RowDefinitions.Count; j++)
                     {
                         Button btn = new Button();
                         btn.Name = $"Btn{coun}";
@@ -131,12 +131,12 @@ namespace WPF
                         Grid.SetColumn(btn, j);
                         btnList.Add(btn);
                         btn.Click += new RoutedEventHandler(game3);
-                        grid.Children.Add(btn);
+                        table.Children.Add(btn);
                         coun++;
                     }
                 }
                 gameInitialize(rowColumnNumber);
-                foreach (Button item in grid.Children)
+                foreach (Button item in table.Children)
                 {
                     item.IsEnabled = false;
                 }
@@ -149,7 +149,7 @@ namespace WPF
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             initializeGame();
-            foreach (Button item in grid.Children)
+            foreach (Button item in table.Children)
             {
                 item.IsEnabled = true;
             }
@@ -167,7 +167,7 @@ namespace WPF
             List<int> intList = new List<int>(Enumerable.Range(1, num * num));
             var result = intList.Select(x => new { value = x, order = rnd.Next() })
              .OrderBy(x => x.order).Select(x => x.value).ToList();
-            foreach (Button item in grid.Children)
+            foreach (Button item in table.Children)
             {
                 item.Content = result[0];
                 item.Background = Brushes.Cyan;
@@ -177,7 +177,7 @@ namespace WPF
         }
         private void game3(object sender, RoutedEventArgs e)
         {
-            foreach (Button item in grid.Children)
+            foreach (Button item in table.Children)
             {
                 item.Background = Brushes.Cyan;
             }
@@ -201,7 +201,7 @@ namespace WPF
       
         private void CheckResult(Button second)
         {//
-            foreach (Button item in grid.Children)
+            foreach (Button item in table.Children)
             {
                 if ("Btn" + item.Content.ToString() != item.Name)
                 {
@@ -216,25 +216,25 @@ namespace WPF
             if (win)
             {
                 string sLeaderBoard = "";
-                foreach (Button item in grid.Children)
+                foreach (Button item in table.Children)
                 {
                     item.IsEnabled = false;
                 }
                 string pName = name.Text;
                 if (pName.Length < 1)
                 {
-                    pName = "Senki";
+                    pName = "Guest";
                 }
                 start.Stop();
                 TimeSpan ts = start.Elapsed;
-                WriteWinnerToTable($"{pName},{ts.TotalSeconds}");
+                WriteWinnerToTable($"{pName},{ts.TotalMilliseconds}");
                 foreach (PlayerData item in scoreGrid.Items)
                 {
                     sLeaderBoard += $"{item.PlayerName},{item.PlayerTime}\r\n";
                 }
                 WriteLeaderBoardToFile(sLeaderBoard);
                 MessageBoxResult res;
-                res = MessageBox.Show($"{pName}!\nNyertél!\nIdőd: {ts.Minutes}perc, {ts.Seconds}másodperc \nMég egy játék?", "Win", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                res = MessageBox.Show($"{pName}!\nNyertél!\nIdőd: {ts.Minutes}perc, {ts.Seconds}másodperc.\nMég egy játék?", "Win", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
                     Button_Click("", new RoutedEventArgs());
